@@ -13,7 +13,7 @@ import requests as re
 # # Configuration for Astra DB
 # ENDPOINT = "https://7650461d-f99f-473d-bd18-254b753a4f45-westus3.apps.astra.datastax.com"
 TOKEN = "AstraCS:ZhfFhNUAeqZxFEmJeSSudxYg:ff1b988a241645646f73645da5f27c916f2b97846026e2bdcf87d12bfb984f90"
-openai.api_key = "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"
+openai.api_key = "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"
 
 
 
@@ -432,25 +432,25 @@ def get_user_desire(query):
 ]
 
 
+    # try:
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=message,
+        max_tokens=1000,
+        temperature=0.2
+    )
+    output_json = response['choices'][0]['message']['content'].strip()
+    # print(type(output_json))
+    print(output_json)
+    
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=message,
-            max_tokens=1000,
-            temperature=0.2
-        )
-        output_json = response['choices'][0]['message']['content'].strip()
-        # print(type(output_json))
-        print(output_json)
-        
-        try:
-            return json.loads(output_json.split("```")[1].replace("json",""))
-        except:
-            return json.loads(output_json.replace("'",'"'))
+        return json.loads(output_json.split("```")[1].replace("json",""))
+    except:
+        return json.loads(output_json.replace("'",'"'))
         # return jsonify({"message": output_json.split("```")[1].replace("json","")})
-    except openai.error.OpenAIError as e:
-        print(e)
-        return jsonify({"error": str(e)})
+    # except openai.error.OpenAIError as e:
+    #     print(e)
+    #     return jsonify({"error": str(e)})
 
 
 
